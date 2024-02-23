@@ -1,4 +1,5 @@
 from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 
 class Model():
     def __init__(self, 
@@ -17,10 +18,16 @@ class Model():
         
         if self.type == "lr":
             self.model = LogisticRegression()
+        elif self.type == "rf":
+            self.model = RandomForestClassifier()
         else:
             raise ValueError("Unknown model type.")
-        
-    def fit(self, X, y):
+    
+    @staticmethod
+    def data_to_Xy(data):
+        return data.X, data.y
+
+    def fit(self, X=None, y=None, data=None):
         """
         Fit the model to the training data.
 
@@ -28,7 +35,10 @@ class Model():
         - X: The input features.
         - y: The target variable.
         """
+        if data and not X and not y:
+            X, y = self.data_to_Xy(data)
         self.model.fit(X, y)
+        
         
     def predict(self, X):
         """
@@ -54,7 +64,7 @@ class Model():
         """
         return self.model.predict_proba(X)
     
-    def score(self, X, y):
+    def score(self, X=None, y=None, data=None):
         """
         Calculate the accuracy score of the model on the given data.
 
@@ -65,6 +75,8 @@ class Model():
         Returns:
         - The accuracy score of the model.
         """
+        if data and not X and not y:
+            X, y = self.data_to_Xy(data)
         return self.model.score(X, y)
 
     def save(self, path: str):

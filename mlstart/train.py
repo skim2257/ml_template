@@ -10,7 +10,7 @@ def main():
     data = SkData(args.dataset_name)
     
     # fit and score
-    model.fit(data.X, data.y)
+    model.fit(data=data)
     print("The model ", args.model_type, " has a score of ", model.score(data.X, data.y))
 
     if args.model_path:
