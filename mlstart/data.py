@@ -8,8 +8,8 @@ class SkData():
     def parse_dataset(name):
         if name == "iris":
             ds = datasets.load_iris()
-        elif name == "diabetes":
-            ds = datasets.load_diabetes()
+        elif name == "wine":
+            ds = datasets.load_wine()
         elif name == "digits":
             ds = datasets.load_digits()
         
